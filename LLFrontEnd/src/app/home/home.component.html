@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<body>
+
+
+<div *ngFor="let card of deck; index as i">
+    <p>The next card is {{card}}</p>
+
+</div>
+
+<div class="heldCard">
+    <p>Card: {{value.Player1HeldCard}}</p>
+</div>
+
+<div>
+
+    <form #userPost="ngForm" (ngSubmit)="drawCard(); userPost.resetForm()"  class="contact-left">
+        <div class="contact-left-title">
+            <h2>Get in touch</h2>
+            <hr>
+
+        </div>
+       <button type="submit">Submit </button> 
+    </form>
+
+    <input [(ngModel)]="value.Player1HeldCard" placeholder="Enter name">
+    <p>Hello, {{ value.Player1HeldCard }}!</p>
+</div>
+
+
+</body>

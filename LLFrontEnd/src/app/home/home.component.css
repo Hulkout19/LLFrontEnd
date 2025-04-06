@@ -1,0 +1,6 @@
+.heldCard{
+    width: 100px;
+    height: 150px;
+    border: 10px;
+    border-style: double;
+}
