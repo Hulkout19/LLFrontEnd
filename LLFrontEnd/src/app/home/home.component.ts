@@ -8,10 +8,15 @@ import { GameService } from '../services/game.service';
 })
 export class HomeComponent implements OnInit{
 
+
   gameData : any[] = [];
   value: any;
   deck: any[] = []
   heldCard: any;
+  drawCardBool: boolean = false;
+  drawnCard: any;
+  hold: any;
+  guess: any;
 
   constructor(private gameService: GameService) {}
 
@@ -27,14 +32,27 @@ export class HomeComponent implements OnInit{
     
   }
 
-  onClick(){
-
+  drawCard(): string{
+    this.drawCardBool = true;
+    this.drawnCard = this.deck[0];
+    this.deck.splice(0,1)
+    console.log(this.heldCard, this.deck);
+    
+    return "true";
   }
 
-  drawCard(): string{
-    const newCard = this.deck[0];
-    this.heldCard = newCard;
-    console.log(this.heldCard);
-    return newCard;
+  play(): void{
+    this.value.Player1HeldCard = this.hold;
+    this.drawCardBool = false;
+
+    switch(this.hold){
+      case "1":
+
+      
+    }
+
+  }
+  guard():void{
+    this.guess = true;
   }
 }
