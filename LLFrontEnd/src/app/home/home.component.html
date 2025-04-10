@@ -1,39 +1,32 @@
 <!DOCTYPE html>
 <body>
 
+<div class="title">
+    <h1>Select the card you want to play</h1>
+</div>
 
 <div class="cards">
-<div class="heldCard">
-    <p>Card: {{value.Player1HeldCard}}</p>
+<div class="heldCard" (click)="setHeldCard()">
+    <p>Card: {{hold}}</p>
 </div>
-<div class="heldCard2" *ngIf="drawCardBool">
+<div class="heldCard2" (click)="keepHeldCard()" *ngIf="drawCardBool">
     <p>Card: {{drawnCard}}</p>
 </div>
 </div>
 <div>
 
-    <form #userPost="ngForm" (ngSubmit)="drawCard(); userPost.resetForm()"  class="contact-left">
+    <form #userPost="ngForm"(ngSubmit)="drawCard(); userPost.resetForm()"  class="contact-left" name="drawCard" ngDefaultControl>
         <div class="contact-left-title">
             <hr>
 
         </div>
-       <button type="submit">Draw a card! </button> 
+       <button *ngIf="drawDisplay" type="submit">Draw a card! </button> 
     </form>
 
-    <div *ngIf="drawCardBool">
-      <label>
-        <input type="radio" name="options" [(ngModel)]="hold" value="{{value.Player1HeldCard}}" />
-        {{value.Player1HeldCard}}
-      </label>
-      
-      <label>
-        <input type="radio" name="options" [(ngModel)]="hold" value="{{drawnCard}}" />
-        {{drawnCard}}
-      </label>
-      
-      <!-- Submit button -->
-      <button (click)="play()">Play!</button>
-    </div>
+    <form #playPost="ngForm" (ngSubmit)="play(); playPost.resetForm()" name="playCard" ngDefaultControl>
+        <button *ngIf="readyToPlay" type="submit">Play!</button>
+    </form>
+
 </div>
 
 
