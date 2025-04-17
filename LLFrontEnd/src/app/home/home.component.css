@@ -16,3 +16,11 @@
     border: 10px;
     border-style: double;
 }
+
+.opponentHeldCard{
+    width: 100px;
+    height: 150px;
+    border: 10px;
+    border-style: double;
+    margin-left: 500px;
+}

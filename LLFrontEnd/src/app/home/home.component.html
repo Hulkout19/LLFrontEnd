@@ -29,7 +29,18 @@
 
 </div>
 
+<div *ngFor="let card of discardDeck">
+    discard: {{card}}
 
+</div>
 
+<div *ngFor="let card of deck">
+    deck: {{card}}
+
+</div>
+
+<div class="opponentHeldCard" >
+    <p>Card: {{value.Player2HeldCard}}</p>
+</div>
 
 </body>

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class MovesService {
+ 
 
   constructor() { }
 
@@ -17,5 +18,25 @@ export class MovesService {
       return false;
     }
 
+  }
+
+  public priest(opponentCard: string): string{
+    return opponentCard;
+  }
+
+  public baron(playerCard: string, opponent: string): any{
+    if(Number(playerCard) == Number(opponent)){
+      return 0
+    }
+    else if(Number(playerCard) > Number(opponent)){
+      return 1;
+    }
+    else if(Number(opponent) > Number(playerCard)){
+      return -1;
+    }
+  }
+
+  public handMaid(){
+    
   }
 }

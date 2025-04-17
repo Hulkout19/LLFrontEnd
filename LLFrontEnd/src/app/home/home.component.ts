@@ -24,6 +24,9 @@ export class HomeComponent implements OnInit{
   drawDisplay: boolean = true;
   tempHeldCard: any;
   tempDrawnCard: any;
+  playerHandmaidActive: boolean = false;
+  discardDeck: any[] = [];
+  playOnSelf: boolean = true;
 
   constructor(private gameService: GameService, private move: MovesService) {}
 
@@ -51,38 +54,26 @@ export class HomeComponent implements OnInit{
     return "true";
   }
 
-  // opponentDrawCard(): string{
-  //   this.
+  
+
+  // public discard(): void{
+  //   this.discardDeck.push(this.hold);
+  //   this.hold = this.forceDraw();
   // }
 
   
 
   setHeldCard(): void {
-    // if(!this.displayOnly){
-    //   this.playCard = this.hold;
-    //   this.hold = this.drawnCard;
-    //   this.readyToPlay = true;
-    //   console.log(this.playCard + "And " + this.hold);
-    //   this.displayOnly = true;
-    //   console.log("success");
-    // }
-    // console.log("no sir");
-    this.readyToPlay = true;
-    this.tempHeldCard = this.drawnCard;
-    this.tempDrawnCard = this.hold;
-    console.log("The card you are holding " + this.tempHeldCard);
-    console.log("The card you have selcted for play "+ this.tempDrawnCard);
+    if(!this.displayOnly){
+      this.readyToPlay = true;
+      this.tempHeldCard = this.drawnCard;
+      this.tempDrawnCard = this.hold;
+      console.log("The card you are holding " + this.tempHeldCard);
+      console.log("The card you have selected for play "+ this.tempDrawnCard);
+    }
   }
 
   keepHeldCard(): void{
-    // if(!this.displayOnly){
-    //   this.playCard = this.drawnCard;
-    //   this.readyToPlay = true;
-    //   this.displayOnly = true;
-    //   console.log("success");
-    // }
-    // console.log("No sir");
-
     this.readyToPlay = true;
     this.tempHeldCard = this.hold;
     this.tempDrawnCard = this.drawnCard;
@@ -95,17 +86,64 @@ export class HomeComponent implements OnInit{
     this.hold = this.tempHeldCard;
     this.playCard = this.tempDrawnCard;
     console.log("The card you are playing:" + this.playCard);
+    this.discardDeck.push(this.playCard);
     this.drawCardBool = false;
     this.drawDisplay = true;
+    this.readyToPlay = false;
+    this.displayOnly = true;
 
     switch(this.playCard){
       case "1":
         console.log(this.move.guard("1",this.value.Player2HeldCard));
+        break;
+      // case "2":
+      //   this.move.priest();
+      //   break;
+      // case "3":
+      //   this.move.baron();
+      //   break;
+      // case "4":
+      //   this.playerHandmaidActive = true;
+      //   break;
+      case "5":
+        this.playOnSelf = true;
+        if(this.playOnSelf){
+          this.hold = this.forceDraw(this.hold);
+        }
+        else{
+          this.value.Player2HeldCard = this.forceDraw(this.value.Player2HeldCard);
+        }
+        
+      //   break;
+      // case "7":
+      //   this.move.king();
+      //   break;
+      // case "8":
+      //   this.move.countess();
+      //   break;
+
     }
 
   }
   
   guard():void{
     this.guess = true;
+  }
+
+ 
+
+  public opponentDrawCard(value: string): any {
+    this.drawnCard = this.deck[0];
+    this.deck.splice(0,1)
+    value = this.drawnCard
+    console.log(value, this.deck);
+    
+    return value;
+  }
+
+  public forceDraw(value: string): any{
+    this.discardDeck.push(value);
+    console.log(value);
+    this.opponentDrawCard(value);
   }
 }
