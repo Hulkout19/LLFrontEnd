@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class MovesService {
  
+  holder1: string = "";
 
   constructor() { }
 
@@ -35,6 +36,13 @@ export class MovesService {
       return -1;
     }
   }
+
+  // public king(playerCard: string, opponentCard: string): any{
+  //   this.holder1 = opponentCard;
+  //   opponentCard = playerCard;
+  //   playerCard = this.holder1;
+  //   return playerCard,opponentCard;
+  // }
 
   public handMaid(){
     

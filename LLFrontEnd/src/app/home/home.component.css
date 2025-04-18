@@ -17,6 +17,14 @@
     border-style: double;
 }
 
+.shownCard{
+    width: 100px;
+    height: 150px;
+    border: 10px;
+    border-style: double;
+    margin-left: 90px;
+}
+
 .opponentHeldCard{
     width: 100px;
     height: 150px;

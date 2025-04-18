@@ -12,6 +12,10 @@
 <div class="heldCard2" (click)="keepHeldCard()" *ngIf="drawCardBool">
     <p>Card: {{drawnCard}}</p>
 </div>
+
+<div class="shownCard" *ngIf="showPriest" (click)="hideCard()">
+    <p>Opponenents Card: {{priestCard}}</p>
+</div>
 </div>
 <div>
 
