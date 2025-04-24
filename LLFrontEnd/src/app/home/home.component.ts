@@ -30,6 +30,10 @@ export class HomeComponent implements OnInit{
   priestCard: any;
   showPriest: boolean = false;
   kingHolder: string = "";
+  deckPlay: any[] = ["1","2","3","4","5","7","8","9"];
+  guardDeck: any[] = ["1","2","3","4","5","7","8","9"];
+  playGuard: boolean = false;
+  gameOver: boolean = false;
 
   constructor(private gameService: GameService, private move: MovesService) {}
 
@@ -97,7 +101,8 @@ export class HomeComponent implements OnInit{
 
     switch(this.playCard){
       case "1":
-        console.log(this.move.guard("1",this.value.Player2HeldCard));
+        this.playGuard = true;
+
         break;
        case "2":
          this.priestCard = this.move.priest(this.value.Player2HeldCard);
@@ -155,5 +160,15 @@ export class HomeComponent implements OnInit{
     console.log(value);
     value = this.opponentDrawCard(value);
     return value;
+  }
+
+  
+  public guessGuard(guess: any) {
+    console.log(guess);
+    this.playGuard = false;
+    if(guess == this.value.Player2HeldCard){
+      this.gameOver = true;
+    }
+    console.log(this.gameOver);
   }
 }

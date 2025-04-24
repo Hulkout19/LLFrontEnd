@@ -43,6 +43,13 @@
 
 </div>
 
+<div *ngIf="playGuard">
+    <div class="guardCard" *ngFor="let guard of guardDeck" (click)="guessGuard(guard)">
+        choose:  {{guard}}
+    </div>
+</div>
+
+
 <div class="opponentHeldCard" >
     <p>Card: {{value.Player2HeldCard}}</p>
 </div>
