@@ -5,11 +5,11 @@
     <h1>Select the card you want to play</h1>
 </div>
 
-<div class="cards">
-<div class="heldCard" (click)="setHeldCard()">
+<div class="cards" [class.maid]="playerHandmaidActive">
+<div class="heldCard" (click)="setHeldCard()" [class.playable]="playableCard">
     <p>Card: {{hold}}</p>
 </div>
-<div class="heldCard2" (click)="keepHeldCard()" *ngIf="drawCardBool">
+<div class="heldCard2" (click)="keepHeldCard()" *ngIf="drawCardBool" [class.playable]="playableCard2">
     <p>Card: {{drawnCard}}</p>
 </div>
 

@@ -1,6 +1,11 @@
 .cards{
     display: flex;
     margin-left: auto;
+    
+}
+
+.cards.maid{
+    background-color: limegreen;
 }
 .heldCard{
     width: 100px;
@@ -10,11 +15,19 @@
 
 }
 
+.heldCard.playable{
+    background-color: grey;
+}
+
 .heldCard2{
     width: 100px;
     height: 150px;
     border: 10px;
     border-style: double;
+}
+
+.heldCard2.playable{
+    background-color: grey;
 }
 
 .shownCard{
