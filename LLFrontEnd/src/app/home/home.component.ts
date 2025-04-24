@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit{
   guardDeck: any[] = ["1","2","3","4","5","7","8","9"];
   playGuard: boolean = false;
   gameOver: boolean = false;
+  playableCard: boolean= false;
+  playableCard2: boolean= false;
 
   constructor(private gameService: GameService, private move: MovesService) {}
 
@@ -101,21 +103,25 @@ export class HomeComponent implements OnInit{
 
     switch(this.playCard){
       case "1":
+        this.playerHandmaidActive = false;
         this.playGuard = true;
 
         break;
        case "2":
+        this.playerHandmaidActive = false;
          this.priestCard = this.move.priest(this.value.Player2HeldCard);
          this.showPriest = true;
          this.drawDisplay = false;
          break;
       // case "3":
+      //this.playerHandmaidActive = false;
       //   this.move.baron();
       //   break;
-      // case "4":
-      //   this.playerHandmaidActive = true;
-      //   break;
+      case "4":
+        this.playerHandmaidActive = true;
+        break;
       case "5":
+        this.playerHandmaidActive = false;
         this.playOnSelf = false;
         if(this.playOnSelf){
           this.hold = this.forceDraw(this.hold);
@@ -126,11 +132,13 @@ export class HomeComponent implements OnInit{
         
         break;
       case "7":
+        this.playerHandmaidActive = false;
         this.kingHolder = this.value.Player2HeldCard;
         this.value.Player2HeldCard = this.hold;
         this.hold=this.kingHolder;
         break;
       // case "8":
+      //   this.playerHandmaidActive = false;
       //   this.move.countess();
       //   break;
 
