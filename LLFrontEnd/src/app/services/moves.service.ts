@@ -35,6 +35,7 @@ export class MovesService {
     else if(Number(opponent) > Number(playerCard)){
       return -1;
     }
+    return 0;
   }
 
   // public king(playerCard: string, opponentCard: string): any{

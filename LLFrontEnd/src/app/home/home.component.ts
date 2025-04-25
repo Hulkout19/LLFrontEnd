@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../services/game.service';
 import { MovesService } from '../services/moves.service';
+import { OpponentService } from '../services/opponent.service';
 
 @Component({
   selector: 'app-home',
@@ -31,13 +32,21 @@ export class HomeComponent implements OnInit{
   showPriest: boolean = false;
   kingHolder: string = "";
   deckPlay: any[] = ["1","2","3","4","5","7","8","9"];
-  guardDeck: any[] = ["1","2","3","4","5","7","8","9"];
+  guardDeck: any[] = ["2","3","4","5","7","8","9"];
   playGuard: boolean = false;
   gameOver: boolean = false;
   playableCard: boolean= false;
   playableCard2: boolean= false;
+  baronResult: any;
+  winner: any;
+  opponentDrawnCard: any;
+  opponentDrawnCard2: any;
+  opponentPlayCard: any;
+  decision: any;
+  assumedCard: any;
 
-  constructor(private gameService: GameService, private move: MovesService) {}
+  constructor(private gameService: GameService, private move: MovesService, private opponent: OpponentService) {}
+
 
   ngOnInit(): void {
     this.gameService.getGame().subscribe(data => {
@@ -48,9 +57,10 @@ export class HomeComponent implements OnInit{
       console.log(this.value);
       this.hold = this.value.Player1HeldCard;
     });
-
     
   }
+
+  
 
   drawCard(): string{
     this.drawDisplay = false;
@@ -65,10 +75,9 @@ export class HomeComponent implements OnInit{
 
   
 
-  // public discard(): void{
-  //   this.discardDeck.push(this.hold);
-  //   this.hold = this.forceDraw();
-  // }
+  gameloop(): void{
+    
+  }
 
   
 
@@ -105,18 +114,29 @@ export class HomeComponent implements OnInit{
       case "1":
         this.playerHandmaidActive = false;
         this.playGuard = true;
-
         break;
        case "2":
-        this.playerHandmaidActive = false;
+         this.playerHandmaidActive = false;
          this.priestCard = this.move.priest(this.value.Player2HeldCard);
          this.showPriest = true;
          this.drawDisplay = false;
          break;
-      // case "3":
-      //this.playerHandmaidActive = false;
-      //   this.move.baron();
-      //   break;
+      case "3":
+        this.playerHandmaidActive = false;
+        this.baronResult = this.move.baron(this.playCard, this.value.Player2HeldCard);
+        if(this.baronResult == 0){
+          this.gameOver = false;
+        }
+        else if(this.baronResult == 1){
+          this.gameOver = true;
+          this.winner = "you won!";
+        }
+        else if(this.baronResult == -1){
+          this.gameOver = true;
+          this.winner = "you lost!";
+        }
+        console.log(this.gameOver);
+        break;
       case "4":
         this.playerHandmaidActive = true;
         break;
@@ -143,7 +163,9 @@ export class HomeComponent implements OnInit{
       //   break;
 
     }
-
+    if(!this.gameOver){
+      
+    }
   }
   
   public hideCard(): any{
@@ -176,7 +198,29 @@ export class HomeComponent implements OnInit{
     this.playGuard = false;
     if(guess == this.value.Player2HeldCard){
       this.gameOver = true;
+      this.winner = "you won!";
     }
     console.log(this.gameOver);
   }
+
+  public opponentTurn(): any{
+    this.opponentDrawnCard2 = this.deck[0];
+    this.deck.splice(0,1);
+    this.decision = this.opponent.ChooseCard(this.value.Player2HeldCard,this.opponentDrawnCard2, this.assumedCard);
+    //0 means keep held card and play drawn card, 1 means keep drawn card and play held card
+    if(this.decision == 0){
+      this.opponentPlayCard = this.opponentDrawnCard2;
+      this.discardDeck.push(this.opponentDrawnCard2);
+      this.opponent.play(this.opponentPlayCard);
+    }
+    else if(this.decision == 1){
+      this.opponentPlayCard = this.value.Player2HeldCard;
+      this.discardDeck.push(this.value.Player2HeldCard);
+      this.value.Player2HeldCard = this.opponentDrawnCard2;
+      this.opponent.play(this.opponentPlayCard);
+    }
+    console.log(this.opponentPlayCard);
+  }
+
+  
 }
