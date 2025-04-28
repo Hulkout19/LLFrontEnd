@@ -164,7 +164,8 @@ export class HomeComponent implements OnInit{
 
     }
     if(!this.gameOver){
-      
+      console.log("playing...");
+      this.opponentTurn();
     }
   }
   
@@ -206,18 +207,25 @@ export class HomeComponent implements OnInit{
   public opponentTurn(): any{
     this.opponentDrawnCard2 = this.deck[0];
     this.deck.splice(0,1);
-    this.decision = this.opponent.ChooseCard(this.value.Player2HeldCard,this.opponentDrawnCard2, this.assumedCard);
+    console.log("opponent hold:" + this.value.Player2HeldCard);
+    console.log("opponent draw:" + this.opponentDrawnCard2);
+    this.decision = this.opponent.ChooseCard(this.value.Player2HeldCard,this.opponentDrawnCard2, 3);
     //0 means keep held card and play drawn card, 1 means keep drawn card and play held card
     if(this.decision == 0){
+      console.log("Opponent played drawn card");
       this.opponentPlayCard = this.opponentDrawnCard2;
       this.discardDeck.push(this.opponentDrawnCard2);
-      this.opponent.play(this.opponentPlayCard);
+      //this.opponent.play(this.opponentPlayCard);
+      console.log("the opponent played:" + this.opponentPlayCard);
+      console.log("the opponent is now holding:" + this.value.Player2HeldCard);
     }
     else if(this.decision == 1){
+      console.log("Opponent played held card");
       this.opponentPlayCard = this.value.Player2HeldCard;
       this.discardDeck.push(this.value.Player2HeldCard);
       this.value.Player2HeldCard = this.opponentDrawnCard2;
-      this.opponent.play(this.opponentPlayCard);
+      console.log("the opponent played:" + this.opponentPlayCard);
+      console.log("the opponent is now holding:" + this.value.Player2HeldCard);
     }
     console.log(this.opponentPlayCard);
   }
