@@ -46,6 +46,10 @@
     margin-left: 500px;
 }
 
+.opponentHeldCard.maid{
+    background-color: limegreen;
+}
+
 .guardCard{
     flex-direction: column;
     width: 100px;
