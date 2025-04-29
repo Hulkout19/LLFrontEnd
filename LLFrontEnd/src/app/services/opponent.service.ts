@@ -8,6 +8,8 @@ export class OpponentService {
   confidence: number = 0.50;
   assumedCard: number = 3;
   handmaid: boolean = false;
+
+
   play(opponentPlayCard: any) {
     throw new Error('Method not implemented.');
   }
@@ -17,7 +19,7 @@ export class OpponentService {
       return this.heldGuard(drawnCard);
       break;
       case '2':
-      //this.heldPriest(drawnCard);
+      return this.heldPriest(drawnCard);
       break;
       case '3':
       //this.heldBaron(drawnCard);
@@ -84,7 +86,7 @@ export class OpponentService {
       }
       break;
       case "7":
-      if(this.assumedCard > 7){
+      if(this.assumedCard > 7 && this.confidence == 1){
         return 0;
       }
       else{
@@ -93,12 +95,63 @@ export class OpponentService {
       break;
       // case 8 and 9 will result in the guard being played everytime
       default:
-      return 0;
+      return 1;
       break;
     }
   }
   }
 
+  heldPriest(drawnCard: any) {
+    switch (drawnCard) {
+      case "1":
+      if(this.confidence > 0.75){
+        return 0;
+      }
+      else{
+        return 1;
+      }
+      break;
+      case "2":
+        return 0;
+      break;
+      case "3":
+      if(this.handmaid == true){
+        return 0;
+      }
+      else{
+        return 1;
+      }
+      break;
+      case "4":
+        return 0;
+      break;
+      case "5":
+      if(this.assumedCard > 2 && this.confidence > 0.75){
+        return 0;
+      }
+      else{
+        return 1;
+      }
+      break;
+      case "7":
+      if(this.assumedCard > 7 && this.confidence == 1){
+        return 0;
+      }
+      else{
+        return 1;
+      }
+      break;
+      // case 8 and 9 will result in the guard being played everytime
+      default:
+      return 1;
+      break;
+    }
+  }
+  public setAssumedCard(assumedCard: any) {
+    this.assumedCard = assumedCard;
+    this.confidence = 1;
+    console.log("knownCard: " + this.assumedCard);
+  }
 
   constructor() { }
 }

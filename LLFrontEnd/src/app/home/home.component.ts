@@ -165,7 +165,7 @@ export class HomeComponent implements OnInit{
     }
     if(!this.gameOver){
       console.log("playing...");
-      this.opponentTurn();
+      this.opponentTurn(this.hold);
     }
   }
   
@@ -204,7 +204,7 @@ export class HomeComponent implements OnInit{
     console.log(this.gameOver);
   }
 
-  public opponentTurn(): any{
+  public opponentTurn(playerCard: any): any{
     this.assumedCard = "6";
     this.opponentDrawnCard2 = this.deck[0];
     this.deck.splice(0,1);
@@ -230,18 +230,18 @@ export class HomeComponent implements OnInit{
     }
     console.log(this.opponentPlayCard);
     console.log("assumed card 1: " + this.assumedCard);
-    this.playOpponent(this.opponentPlayCard,this.assumedCard);
+    this.playOpponent(this.opponentPlayCard,this.assumedCard, playerCard);
   }
 
-  public playOpponent(playCard:any, assumedCard:any): any{
+  public playOpponent(playCard:any, assumedCard:any, playerCard:any): any{
     console.log("opponent assumed:" + assumedCard);
     switch(playCard){
       case "1":
         this.opponentGuard(assumedCard);
         break;
-      // case "2":
-      //   this.opponent.priest(this.hold);
-      //   break;
+      case "2":
+        this.opponent.setAssumedCard(playerCard);
+        break;
       // case "3":
       //   this.baronResult = this.move.baron(this.opponentPlayCard, this.hold);
       //   if(this.baronResult == 0){
@@ -281,6 +281,9 @@ export class HomeComponent implements OnInit{
     }
     console.log(this.gameOver);
   }
+
+
+
 
   
 }
