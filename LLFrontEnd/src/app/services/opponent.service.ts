@@ -47,7 +47,7 @@ export class OpponentService {
 
 
   heldGuard(drawnCard: any) {
-    this.confidence = 0.50
+    this.confidence = 1;
     if(this.confidence > 0.75 && this.assumedCard != 1){
       return 1;
     }

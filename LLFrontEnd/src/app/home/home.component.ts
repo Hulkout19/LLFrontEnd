@@ -205,6 +205,7 @@ export class HomeComponent implements OnInit{
   }
 
   public opponentTurn(): any{
+    this.assumedCard = "6";
     this.opponentDrawnCard2 = this.deck[0];
     this.deck.splice(0,1);
     console.log("opponent hold:" + this.value.Player2HeldCard);
@@ -228,7 +229,60 @@ export class HomeComponent implements OnInit{
       console.log("the opponent is now holding:" + this.value.Player2HeldCard);
     }
     console.log(this.opponentPlayCard);
+    console.log("assumed card 1: " + this.assumedCard);
+    this.playOpponent(this.opponentPlayCard,this.assumedCard);
+  }
+
+  public playOpponent(playCard:any, assumedCard:any): any{
+    console.log("opponent assumed:" + assumedCard);
+    switch(playCard){
+      case "1":
+        this.opponentGuard(assumedCard);
+        break;
+      // case "2":
+      //   this.opponent.priest(this.hold);
+      //   break;
+      // case "3":
+      //   this.baronResult = this.move.baron(this.opponentPlayCard, this.hold);
+      //   if(this.baronResult == 0){
+      //     this.gameOver = false;
+      //   }
+      //   else if(this.baronResult == 1){
+      //     this.gameOver = true;
+      //     this.winner = "you lost!";
+      //   }
+      //   else if(this.baronResult == -1){
+      //     this.gameOver = true;
+      //     this.winner = "you won!";
+      //   }
+      //   console.log(this.gameOver);
+      //   break;
+      // case "4":
+      //   //this.opponent.handmaid();
+      //   break;
+      // case "5":
+      //   //this.opponent.prince();
+      //   break;
+      // case "7":
+      //   //this.opponent.king();
+      //   break;
+      // case "8":
+      //   //this.opponent.countess();
+      //   break;
+
+    }
+  }
+
+  public opponentGuard(guess: any) {
+    console.log(guess);
+    if(guess == "6"){
+      this.gameOver = true;
+      this.winner = "you lost!";
+    }
+    console.log(this.gameOver);
   }
 
   
 }
+
+
