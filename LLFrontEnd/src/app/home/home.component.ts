@@ -33,6 +33,9 @@ export class HomeComponent implements OnInit{
   kingHolder: string = "";
   deckPlay: any[] = ["1","2","3","4","5","7","8","9"];
   possibleCards: any[] = ["1","1","1","1","1","2","2","3","3","4","4","5","5","7","8","9"];
+  opponentPossibleCards: any[] = ["1","1","1","1","1","2","2","3","3","4","4","5","5","7","8","9"];
+  opponentsPossibleCardsLow: any[] = ["1","1","1","1","1","2","2","3","3","4","4"];
+  opponentsPossibleCardsHigh: any[] = ["5","5","7","8","9"];
   guardDeck: any[] = ["2","3","4","5","7","8","9"];
   playGuard: boolean = false;
   gameOver: boolean = false;
@@ -48,6 +51,7 @@ export class HomeComponent implements OnInit{
   assumedCard: any;
   continue: boolean = false;
   initialSetup: boolean = true;
+  newAssumedCard: any;
 
   constructor(private gameService: GameService, private move: MovesService, private opponent: OpponentService) {}
 
@@ -172,23 +176,78 @@ export class HomeComponent implements OnInit{
 
     }
     if(!this.gameOver){
-      this.findConfidence();
+      this.newAssumedCard = this.findAssumedCard(this.playCard,this.hold);
+      console.log("new assumed card: " + this.newAssumedCard);
       console.log("the opponent is thinking...");
       await this.delay(2500);
-      this.opponentTurn(this.hold);
+      this.opponentTurn(this.hold, this.newAssumedCard);
     }
   }
-  findConfidence() : any{
-    if(this.initialSetup){
-      this.initialSetup = false;
-      this.assumedCard = ["2", "3", "4", "5"][Math.floor(Math.random() * 4)];
-      this.value.confidence = 0.12;
+
+
+
+  findAssumedCard(playCard: any, hold:any): any{
+    //remove the card from the possible cards
+    if(Number(playCard) <= 4){
+      const index = this.opponentsPossibleCardsLow.indexOf(playCard);
+      if (index > -1) {
+        this.opponentsPossibleCardsLow.splice(index, 1);
+      }
     }
-    else{
-      
+    else if(Number(playCard) > 4){
+      const index = this.opponentsPossibleCardsHigh.indexOf(playCard);
+      if (index > -1) {
+        this.opponentsPossibleCardsHigh.splice(index, 1);
+      }
     }
 
+    const index = this.opponentPossibleCards.indexOf(playCard);
+    if (index > -1) {
+      this.opponentPossibleCards.splice(index, 1);
+    }
+
+    if(this.initialSetup){
+          this.initialSetup = false;
+          this.assumedCard = ["2", "3", "4", "5"][Math.floor(Math.random() * 4)];
+          console.log("assumed card initial: " + this.assumedCard);
+          console.log("initial setup:" + this.initialSetup)
+    }
+      
+    else{
+      if(this.assumedCard == playCard){
+      switch (playCard) {
+        case "1":
+          this.assumedCard = this.opponentPossibleCards[Math.floor(Math.random() * this.opponentPossibleCards.length)];
+          console.log("assumed card 1: " + this.assumedCard);
+          break;
+        case "2":
+          this.assumedCard = this.opponentPossibleCards[Math.floor(Math.random() * this.opponentPossibleCards.length)];
+          console.log("assumed card 2: " + this.assumedCard);
+          break;
+        case "4":
+          this.assumedCard = this.opponentPossibleCards[Math.floor(Math.random() * this.opponentPossibleCards.length)];
+          console.log("assumed card 4: " + this.assumedCard);
+          break;
+        case "5":
+          this.assumedCard = this.opponentsPossibleCardsHigh[Math.floor(Math.random() * this.opponentsPossibleCardsHigh.length)];
+          console.log("assumed card 5: " + this.assumedCard);
+          break;
+        case "7":
+          this.assumedCard = hold;
+          console.log("assumed card 7: " + this.assumedCard);
+          break;
+        case "8":
+          this.assumedCard = this.opponentsPossibleCardsHigh[Math.floor(Math.random() * this.opponentsPossibleCardsHigh.length)];
+          console.log("assumed card 8: " + this.assumedCard);
+          break;
+        default:
+          this.assumedCard = this.opponentPossibleCards[Math.floor(Math.random() * this.opponentPossibleCards.length)];
+          break;
+      }
+    }
+      return this.assumedCard;
   }
+}
   
   public hideCard(): any{
     this.showPriest = false;
@@ -228,8 +287,7 @@ export class HomeComponent implements OnInit{
     }
   }
 
-  public opponentTurn(playerCard: any): any{
-    this.assumedCard = "6";
+  public opponentTurn(playerCard: any, assumedCard: any): any{
     this.opponentDrawnCard2 = this.deck[0];
     this.deck.splice(0,1);
     console.log("opponent hold:" + this.value.Player2HeldCard);
@@ -253,8 +311,8 @@ export class HomeComponent implements OnInit{
       console.log("the opponent is now holding:" + this.value.Player2HeldCard);
     }
     console.log(this.opponentPlayCard);
-    console.log("assumed card 1: " + this.assumedCard);
-    this.playOpponent(this.opponentPlayCard,this.assumedCard, playerCard, this.value.Player2HeldCard);
+    console.log("assumed card 1: " + assumedCard);
+    this.playOpponent(this.opponentPlayCard,assumedCard, playerCard, this.value.Player2HeldCard);
   }
 
   public playOpponent(playCard:any, assumedCard:any, playerCard:any, heldCard:any): any{
