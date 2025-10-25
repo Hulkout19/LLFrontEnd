@@ -38,12 +38,14 @@ import Typewriter from 't-writer.js';
 import {MatGridListModule} from '@angular/material';
 
 import { RouterModule } from '@angular/router';
+import { FinishComponent } from './finish/finish.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    FinishComponent
   ],
   imports: [
     BrowserModule,

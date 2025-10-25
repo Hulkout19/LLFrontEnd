@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GameService } from '../services/game.service';
 import { MovesService } from '../services/moves.service';
 import { OpponentService } from '../services/opponent.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit{
   initialSetup: boolean = true;
   newAssumedCard: any;
 
-  constructor(private gameService: GameService, private move: MovesService, private opponent: OpponentService) {}
+  constructor(private gameService: GameService, private move: MovesService, private opponent: OpponentService, private router: Router) {}
 
 
   ngOnInit(): void {
@@ -142,10 +143,12 @@ export class HomeComponent implements OnInit{
         else if(this.baronResult == 1){
           this.gameOver = true;
           this.winner = "you won!";
+          this.router.navigate(['/finish']);
         }
         else if(this.baronResult == -1){
           this.gameOver = true;
           this.winner = "you lost!";
+          this.router.navigate(['/finish']);
         }
         console.log(this.gameOver);
         break;
