@@ -183,7 +183,8 @@ export class HomeComponent implements OnInit{
       console.log("new assumed card: " + this.newAssumedCard);
       console.log("the opponent is thinking...");
       await this.delay(2500);
-      this.opponentTurn(this.hold, this.newAssumedCard);
+      // this.opponentTurn(this.hold, this.newAssumedCard);
+      this.opponentTurn(this.hold, this.assumedCard);
     }
   }
 
@@ -366,7 +367,7 @@ export class HomeComponent implements OnInit{
   }
 
   public opponentGuard(guess: any) {
-    console.log(guess);
+    console.log("opponent guess is:" + guess);
     if(guess == "6"){
       this.gameOver = true;
       this.winner = "you lost!";
