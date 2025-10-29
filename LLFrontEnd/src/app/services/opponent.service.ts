@@ -273,7 +273,6 @@ export class OpponentService {
   }
 
   heldKing(drawnCard: any) {
-    return 1;
     switch (drawnCard) {
       case "1":
           return 0

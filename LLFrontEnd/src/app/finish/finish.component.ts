@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-finish',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class FinishComponent {
 
+heldCard: any;
+opponentHeldCard: any;
+constructor(private route: ActivatedRoute) {}
+
+ngOnInit() {
+  this.route.queryParams.subscribe(params => {
+    this.heldCard = params['held'];
+    this.opponentHeldCard = params['opponentHeld'];
+  });
+}
 }
