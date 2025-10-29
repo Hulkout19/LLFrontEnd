@@ -155,7 +155,8 @@ export class HomeComponent implements OnInit{
           break;
         }
         this.playerHandmaidActive = false;
-        this.baronResult = this.move.baron(this.playCard, this.value.Player2HeldCard);
+        this.baronResult = this.move.baron(this.hold, this.value.Player2HeldCard);
+        console.log("The card that was compared is: " + this.hold + " vs " + this.value.Player2HeldCard);
         if(this.baronResult == 0){
           this.gameOver = false;
           
@@ -163,12 +164,12 @@ export class HomeComponent implements OnInit{
         else if(this.baronResult == 1){
           this.gameOver = true;
           this.winner = "you won!";
-          this.router.navigate(['/finish'],{ queryParams: { held: this.tempHeldCard, opponentHeld: this.value.Player2HeldCard } });
+          this.router.navigate(['/finish'],{ queryParams: { held: this.tempHeldCard, opponentHeld: this.value.Player2HeldCard, play: this.playCard } });
         }
         else if(this.baronResult == -1){
           this.gameOver = true;
           this.winner = "you lost!";
-          this.router.navigate(['/finish'],{ queryParams: { held: this.tempHeldCard, opponentHeld: this.value.Player2HeldCard } });
+            this.router.navigate(['/finish'],{ queryParams: { held: this.tempHeldCard, opponentHeld: this.value.Player2HeldCard, play: this.playCard } });
         }
         console.log(this.gameOver);
         break;
@@ -302,8 +303,9 @@ export class HomeComponent implements OnInit{
     if(this.value.Player2HeldCard == "9"){
       this.gameOver = true;
       this.winner = "you won!";
-      this.router.navigate(['/finish']);
-      return;    }
+      this.router.navigate(['/finish'],{ queryParams: { held: this.tempHeldCard, opponentHeld: this.value.Player2HeldCard, play: this.playCard } });
+      return;
+    }
     this.discardDeck.push(value);
     console.log(value);
     value = this.opponentDrawCard(value);
@@ -317,7 +319,7 @@ export class HomeComponent implements OnInit{
       
       this.gameOver = true;
       this.winner = "you won!";
-      this.router.navigate(['/finish']);
+      this.router.navigate(['/finish'],{ queryParams: { held: this.tempHeldCard, opponentHeld: this.value.Player2HeldCard, play: this.playCard } });
       return true;
     }
     else{
@@ -366,7 +368,7 @@ export class HomeComponent implements OnInit{
         break;
       case "2":
         if(!this.playerHandmaidActive){
-          this.opponent.setAssumedCard(playerCard);
+          this.assumedCard = playerCard;
         }
         else{
           console.log("the player is protected by the handmaid");
@@ -430,7 +432,7 @@ export class HomeComponent implements OnInit{
     if(this.hold == "9"){
       this.gameOver = true;
       this.winner = "player lost!";
-      this.router.navigate(['/finish']);
+      this.router.navigate(['/finish'],{ queryParams: { held: this.tempHeldCard, opponentHeld: this.value.Player2HeldCard, play: this.playCard } });
       return;
     }
     else{

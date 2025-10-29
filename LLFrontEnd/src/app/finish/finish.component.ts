@@ -10,12 +10,15 @@ export class FinishComponent {
 
 heldCard: any;
 opponentHeldCard: any;
+playCard: any;
 constructor(private route: ActivatedRoute) {}
 
 ngOnInit() {
   this.route.queryParams.subscribe(params => {
     this.heldCard = params['held'];
     this.opponentHeldCard = params['opponentHeld'];
+    this.playCard = params['play'];
+
   });
 }
 }
