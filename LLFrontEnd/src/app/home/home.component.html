@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <body>
+<div class="devSection" [class.dev]="status">
 
 <div class="title">
     <h1>Select the card you want to play</h1>
+</div>
+
+<div class="changeStatus" (click)="changeStatus()">
+    Status change
 </div>
 
 <div class="cards" [class.maid]="playerHandmaidActive">
@@ -60,5 +65,18 @@
 <div *ngIf="gameOver">
     game over: {{winner}}
 </div>
+</div>
 
+<div class="prodSection" [class.dev]="!status">
+    <h1>Love Letter Game</h1>
+    <p>By Sven Broman</p>
+
+    
+
+
+<div class="changeStatus" (click)="changeStatus()">
+    Status change
+</div>
+
+</div>
 </body>

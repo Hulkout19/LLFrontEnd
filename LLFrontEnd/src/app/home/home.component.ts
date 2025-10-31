@@ -54,6 +54,7 @@ export class HomeComponent implements OnInit{
   initialSetup: boolean = true;
   newAssumedCard: any;
   doneGuess: boolean = false;
+  status: boolean = false; //false is dev mode, true is prod mode
 
   constructor(private gameService: GameService, private move: MovesService, private opponent: OpponentService, private router: Router) {}
 
@@ -70,7 +71,10 @@ export class HomeComponent implements OnInit{
     
   }
 
-  
+  changeStatus(): void {
+    this.status = !this.status;
+    console.log("Status changed to: " + this.status);
+  }
 
   drawCard(): string{
     this.drawDisplay = false;

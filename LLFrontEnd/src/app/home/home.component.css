@@ -1,3 +1,10 @@
+.devSection.dev{
+    display: none;
+}
+
+.prodSection.dev{
+    display: none;
+}
 .cards{
     display: flex;
     margin-left: auto;
