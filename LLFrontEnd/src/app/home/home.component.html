@@ -78,5 +78,40 @@
     Status change
 </div>
 
+<div class="cards" [class.maid]="playerHandmaidActive">
+    <div class="heldCard" (click)="setHeldCard()" [class.playable]="playableCard">
+        <p>Card: {{hold}}</p>
+    </div>
+        <div class="heldCard2" (click)="keepHeldCard()" *ngIf="drawCardBool" [class.playable]="playableCard2">
+            <p>Card: {{drawnCard}}</p>
+        </div>
+
+        <div class="shownCard" *ngIf="showPriest" (click)="hideCard()">
+            <p>Opponenents Card: {{priestCard}}</p>
+        </div>
+    </div>
+
+
+    <div>
+
+    <form #userPost="ngForm"(ngSubmit)="drawCard(); userPost.resetForm()"  class="contact-left" name="drawCard" ngDefaultControl>
+        <div class="contact-left-title">
+            <hr>
+
+        </div>
+       <button *ngIf="drawDisplay" type="submit">Draw a card! </button> 
+    </form>
+
+    <form #playPost="ngForm" (ngSubmit)="play(); playPost.resetForm()" name="playCard" ngDefaultControl>
+        <button *ngIf="readyToPlay" type="submit">Play!</button>
+    </form>
+
+</div>
+
+<div *ngIf="playGuard">
+    <div class="guardCard" *ngFor="let guard of guardDeck" (click)="guessGuard(guard)">
+        choose:  {{guard}}
+    </div>
+</div>
 </div>
 </body>
